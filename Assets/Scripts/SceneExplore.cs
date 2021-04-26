@@ -7,7 +7,7 @@ using UnityEngine;
 //in scene mode
 public class SceneExplore : MonoBehaviour
 {
-    Vector2 pub_rotation = Vector2.zero;
+    Vector2 pubRotation = Vector2.zero;
     [Range(0.5f, 10.0f)]
     public float cameraSpeed = 2f;
     [Range(0.5f, 100.0f)]
@@ -123,16 +123,7 @@ public class SceneExplore : MonoBehaviour
     {
         moveSpeed *= 3;
     }
-    /*
-    void ForceCollide()
-    {
-        if (transform.position.y <= 0.6f)
-        {
-            //LOCKS Y POSITION ON COLLIDE:
-            transform.position = new Vector3(transform.position.x, 0.6f, transform.position.z);
-        }
-    }
-    */
+
     void MouseLook()
     {
         //Pause mouselook key
@@ -142,9 +133,9 @@ public class SceneExplore : MonoBehaviour
         if (!noLook)
         {
             Cursor.lockState = CursorLockMode.Locked;
-            pub_rotation.y += Input.GetAxis("Mouse X");
-            pub_rotation.x += Input.GetAxis("Mouse Y") - (Input.GetAxis("Mouse Y") * 2);
-            transform.eulerAngles = pub_rotation * cameraSpeed;
+            pubRotation.y += Input.GetAxis("Mouse X");
+            pubRotation.x += Input.GetAxis("Mouse Y") - (Input.GetAxis("Mouse Y") * 2);
+            transform.eulerAngles = pubRotation * cameraSpeed;
         }
         else
             Cursor.lockState = CursorLockMode.None;
