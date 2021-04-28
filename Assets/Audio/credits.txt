@@ -1,0 +1,3 @@
+"menuClick" from: Star Wars Battlefront 2 Classic, 2005
+"fire" edited from: https://www.youtube.com/watch?v=mz9ftphTWTM 
+"pickup" generated with: https://sfxr.me/

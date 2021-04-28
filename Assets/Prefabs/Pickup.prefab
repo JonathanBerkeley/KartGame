@@ -257,7 +257,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   respawnDelay: 10
   regenAmount: 100
-  packAudio: []
+  packAudio:
+  - {fileID: 8300000, guid: a97df6b6aee664e49948201f0ef49933, type: 3}
   effect: 0
 --- !u!135 &7810218649237691643
 SphereCollider:
