@@ -258,6 +258,7 @@ MonoBehaviour:
   respawnDelay: 10
   regenAmount: 100
   packAudio:
+  - {fileID: 8300000, guid: 8898e3c445703ff4b9d19ff5adf12b05, type: 3}
   - {fileID: 8300000, guid: a97df6b6aee664e49948201f0ef49933, type: 3}
   effect: 0
 --- !u!135 &7810218649237691643
@@ -268,7 +269,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7810218649237691642}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.7507858
