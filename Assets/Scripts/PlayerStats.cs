@@ -6,56 +6,114 @@ using KartGame.KartSystems;
 public class PlayerStats : MonoBehaviour
 {
     public int currentPowerup = -1; //-1 means no powerup
+    public float viewShiftOnAccelerate = 15.0f;
 
-    private string[] powerups = { "Speedboost", "Jumpboost" };
+    private string[] powerups = { "Speedboost", "Low-Gravity" };
 
     private ArcadeKart arcadeKartStats;
+    private ExtendedControls extraControls;
+    private float currentPowerupTime = 0.0f; //Set by powerup script
     private void Start()
     {
         arcadeKartStats = gameObject.GetComponent<ArcadeKart>();
+        extraControls = gameObject.GetComponent<ExtendedControls>();
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("UsePowerup"))
+        if (Input.GetButtonDown("UsePowerup") && currentPowerup != -1)
         {
             switch (currentPowerup)
             {
-                case -1:
                 case 0:
-                    break;
+                    return;
                 case 1:
                     arcadeKartStats.baseStats.TopSpeed += 5.0f;
                     arcadeKartStats.baseStats.Acceleration += 5.0f;
+                    extraControls.SetCameraFOV(viewShiftOnAccelerate, currentPowerupTime);
+                    StartCoroutine(UndoPowerup(1));
                     break;
                 case 2:
-                    arcadeKartStats.baseStats.TopSpeed += 5.0f;
-                    arcadeKartStats.baseStats.Acceleration += 5.0f;
+                    arcadeKartStats.baseStats.AddedGravity -= 1.0f;
+                    StartCoroutine(UndoPowerup(2));
                     break;
-
+                case 3:
+                    break;
                 default:
                     break;
             }
-
-            Debug.Log("Used powerup: " + powerups[currentPowerup]);
+            Debug.Log("Used powerup: " + powerups[currentPowerup - 1]);
             currentPowerup = -1;
         }
     }
 
-    public void SetPowerup(int _power)
+    public void SetPowerup(int _power, float _time)
     {
         if (_power == 0)
         {
-            currentPowerup = Random.Range(1, powerups.Length);
+            currentPowerup = Random.Range(1, powerups.Length + 1);
         }
         else
         {
             currentPowerup = _power;
         }
+        currentPowerupTime = _time;
     }
 
     public int GetPowerup()
     {
         return currentPowerup;
+    }
+
+    public void SetEffect(int _effectID, float _difference, float _timeToUndo)
+    {
+        switch (_effectID)
+        {
+            case 0:
+                arcadeKartStats.baseStats.Acceleration += _difference;
+                arcadeKartStats.baseStats.AccelerationCurve += _difference;
+                arcadeKartStats.baseStats.TopSpeed += _difference;
+                extraControls.SetCameraFOV(viewShiftOnAccelerate, 3.0f);
+                StartCoroutine(UndoEffect(_effectID, _difference, _timeToUndo));
+                break;
+            default:
+                break;
+        }
+    }
+
+    //Reverses the effect after some time
+    IEnumerator UndoEffect(int _effectID, float _difference, float _time)
+    {
+        yield return new WaitForSeconds(_time);
+        switch (_effectID)
+        {
+            case 0:
+                arcadeKartStats.baseStats.Acceleration -= _difference;
+                arcadeKartStats.baseStats.AccelerationCurve -= _difference;
+                arcadeKartStats.baseStats.TopSpeed -= _difference;
+                break;
+            default:
+                break;
+        }
+    }
+
+    IEnumerator UndoPowerup(int _powerupID)
+    {
+        yield return new WaitForSeconds(currentPowerupTime);
+        //Undo powerup:
+        switch (_powerupID)
+        {
+            case 0:
+                break;
+            case 1:
+                arcadeKartStats.baseStats.TopSpeed -= 5.0f;
+                arcadeKartStats.baseStats.Acceleration -= 5.0f;
+                break;
+            case 2:
+                arcadeKartStats.baseStats.AddedGravity += 1.0f;
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -261,6 +261,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8898e3c445703ff4b9d19ff5adf12b05, type: 3}
   - {fileID: 8300000, guid: a97df6b6aee664e49948201f0ef49933, type: 3}
   effect: 0
+  effectTime: 5
 --- !u!135 &7810218649237691643
 SphereCollider:
   m_ObjectHideFlags: 0

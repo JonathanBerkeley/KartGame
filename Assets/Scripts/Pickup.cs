@@ -10,6 +10,7 @@ public class Pickup : MonoBehaviour
 
     [Header("0 for random effect")]
     public int effect = 0;
+    public float effectTime = 3.0f;
 
     //Detecting if a player touches Pickup
     private void OnTriggerEnter(Collider collision)
@@ -23,7 +24,7 @@ public class Pickup : MonoBehaviour
                 return;
 
             //Gives player an effect they can use
-            _actor.SetPowerup(effect);
+            _actor.SetPowerup(effect, effectTime);
 
             StartCoroutine(RespawnPickup());
         }
