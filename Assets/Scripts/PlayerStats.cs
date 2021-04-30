@@ -13,8 +13,11 @@ public class PlayerStats : MonoBehaviour
     private ArcadeKart arcadeKartStats;
     private ExtendedControls extraControls;
     private float currentPowerupTime = 0.0f; //Set by powerup script
+
+    private UpdateUI updateUI;
     private void Start()
     {
+        updateUI = gameObject.GetComponent<UpdateUI>();
         arcadeKartStats = gameObject.GetComponent<ArcadeKart>();
         extraControls = gameObject.GetComponent<ExtendedControls>();
     }
@@ -45,6 +48,13 @@ public class PlayerStats : MonoBehaviour
             Debug.Log("Used powerup: " + powerups[currentPowerup - 1]);
             currentPowerup = -1;
         }
+        else if (currentPowerup == -1)
+        {
+            if (updateUI != null)
+            {
+                updateUI.DisablePanel();
+            }
+        }
     }
 
     public void SetPowerup(int _power, float _time)
@@ -57,6 +67,13 @@ public class PlayerStats : MonoBehaviour
         {
             currentPowerup = _power;
         }
+
+        if (updateUI != null)
+        {
+            updateUI.SetText("Powerup: " + powerups[currentPowerup - 1]);
+        }
+            
+
         currentPowerupTime = _time;
     }
 

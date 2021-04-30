@@ -6,14 +6,14 @@ using UnityEngine;
 public class ResetPos : MonoBehaviour
 {
     public Vector3 goToPosition = new Vector3(0, 0, 0);
-    public Vector3 setPosition = new Vector3(0, 0, 0);
+    public Vector3 setRotation = new Vector3(0, 0, 0);
 
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             collision.gameObject.transform.root.position = goToPosition;
-            collision.gameObject.transform.root.eulerAngles = setPosition;
+            collision.gameObject.transform.root.eulerAngles = setRotation;
         }
     }
 }
