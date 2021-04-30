@@ -7,12 +7,12 @@ public class ExtendedControls : MonoBehaviour
     public GameObject thirdPersonCam;
     public GameObject firstPersonCam;
 
-    private bool currentCam; // True = thirdperson
+    private bool currentCam; // False = thirdperson
 
     private void Start()
     {
         // Initial configuration
-        currentCam = true;
+        currentCam = false;
         thirdPersonCam.SetActive(true);
         firstPersonCam.SetActive(false);
     }

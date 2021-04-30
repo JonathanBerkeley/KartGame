@@ -12,19 +12,17 @@ public class MenuInit : MonoBehaviour
     public Button[] uiButtons;
     public Button[] settingsButtons;
     public Button[] playButtons;
+    public Button[] connectButtons;
 
     public GameObject mainMenu;
     public GameObject settingsMenu;
     public GameObject playMenu;
+    public GameObject connectMenu;
 
     public AudioClip clickAudio;
     public float menuAudioVolume;
 
     public MenuCamera cameraScript;
-
-    //Colours for fog true/false
-    private Color buttonColorFalse = new Color32(164, 35, 35, 200);
-    private Color buttonColorTrue = new Color32(75, 181, 75, 200);
 
     //For resetting camera speed
     private float previousCameraSpeed = 0.0f;
@@ -48,6 +46,7 @@ public class MenuInit : MonoBehaviour
         mainMenu.SetActive(true);
         settingsMenu.SetActive(false);
         playMenu.SetActive(false);
+        connectMenu.SetActive(false);
 
         //Sets up event listeners for main menu
         if (uiButtons.Length == 3)
@@ -80,6 +79,16 @@ public class MenuInit : MonoBehaviour
 
             pbtn = playButtons[2].GetComponent<Button>();
             pbtn.onClick.AddListener(BackButtonClicked);
+        }
+
+        //Set up listeners for connect menu
+        if (connectButtons.Length == 2)
+        {
+            Button cbtn = connectButtons[0].GetComponent<Button>();
+            //cbtn.onClick.AddListener();
+
+            cbtn = connectButtons[1].GetComponent<Button>();
+            cbtn.onClick.AddListener(BackOneDepth);
         }
     }
 
@@ -138,6 +147,7 @@ public class MenuInit : MonoBehaviour
     void BackButtonClicked()
     {
         MenuClickAudio();
+        connectMenu.SetActive(false);
         settingsMenu.SetActive(false);
         playMenu.SetActive(false);
         mainMenu.SetActive(true);
@@ -153,7 +163,7 @@ public class MenuInit : MonoBehaviour
         mainMenu.SetActive(false);
         playMenu.SetActive(false);
 
-        //SceneManager.LoadScene("MultiScene");
+        connectMenu.SetActive(true);
     }
 
     void Singleplayer()
@@ -164,7 +174,15 @@ public class MenuInit : MonoBehaviour
         mainMenu.SetActive(false);
         playMenu.SetActive(false);
 
-        //SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("LevelSelect");
+    }
+
+    //Connect menu functionality below
+    void BackOneDepth()
+    {
+        MenuClickAudio();
+        connectMenu.SetActive(false);
+        playMenu.SetActive(true);
     }
 
     //Audio on menu
@@ -172,7 +190,6 @@ public class MenuInit : MonoBehaviour
     {
         //Figures out menu camera position and plays sound at that location
         Vector3 currentCameraPosition = Camera.main.transform.position;
-        currentCameraPosition = (0.9f * currentCameraPosition) + (0.1f * transform.position);
         AudioSource.PlayClipAtPoint(clickAudio, currentCameraPosition, menuAudioVolume);
     }
 

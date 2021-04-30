@@ -5,6 +5,8 @@
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
+/[Bb]uild32/
+/[Bb]uild64/
 /[Bb]uild/
 /[Bb]uilds/
 /[Ll]ogs/
