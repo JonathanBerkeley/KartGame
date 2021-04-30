@@ -9,7 +9,6 @@ public class GamePreferencesManager : MonoBehaviour
     const string MasterVolumeKey = "MasterVolume";
     const string EffectsVolumeKey = "EffectsVolume";
     const string FullscreenKey = "Fullscreen";
-    const string FogKey = "Fog";
     const string ResolutionKey = "Resolution";
 
     private void Start()

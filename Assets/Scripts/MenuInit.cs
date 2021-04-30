@@ -18,9 +18,13 @@ public class MenuInit : MonoBehaviour
     public GameObject settingsMenu;
     public GameObject playMenu;
     public GameObject connectMenu;
+    public GameObject menuAudioListener;
 
     public AudioClip clickAudio;
     public float menuAudioVolume;
+
+    public AudioClip menuSong;
+    public float menuSongVolume;
 
     public MenuCamera cameraScript;
 
@@ -90,6 +94,11 @@ public class MenuInit : MonoBehaviour
             cbtn = connectButtons[1].GetComponent<Button>();
             cbtn.onClick.AddListener(BackOneDepth);
         }
+
+        //Play main menu music
+        AudioSource.PlayClipAtPoint(menuSong,
+            menuAudioListener.transform.position,
+            menuSongVolume);
     }
 
     void Update()
@@ -107,6 +116,7 @@ public class MenuInit : MonoBehaviour
         mainMenu.SetActive(false);
         settingsMenu.SetActive(false);
         playMenu.SetActive(true);
+        previousCameraSpeed = cameraScript.GetCameraSpeed();
     }
 
     void SettingsButtonClicked()
@@ -188,9 +198,9 @@ public class MenuInit : MonoBehaviour
     //Audio on menu
     void MenuClickAudio()
     {
-        //Figures out menu camera position and plays sound at that location
-        Vector3 currentCameraPosition = Camera.main.transform.position;
-        AudioSource.PlayClipAtPoint(clickAudio, currentCameraPosition, menuAudioVolume);
+        AudioSource.PlayClipAtPoint(clickAudio, 
+            menuAudioListener.transform.position,
+            menuAudioVolume);
     }
 
     public AudioClip GetClickAudio()
