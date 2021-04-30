@@ -6,4 +6,10 @@ using UnityEngine;
 public class CamID : MonoBehaviour
 {
     public int id = 0;
+
+    private void Start()
+    {
+        float _contrast = 25.0f * OptionsMenu.FieldOfViewModifier;
+        gameObject.GetComponent<Camera>().fieldOfView += _contrast;
+    }
 }

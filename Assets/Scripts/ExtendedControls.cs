@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ExtendedControls : MonoBehaviour
 {
@@ -34,6 +35,10 @@ public class ExtendedControls : MonoBehaviour
             }
             currentCam = !currentCam;
         }
+        // if (Input.GetButtonDown("Cancel"))
+        // {
+        //     SceneManager.LoadScene("MainMenu");
+        // }
     }
 
     public void SetCameraFOV(float _change, float _resetTime)

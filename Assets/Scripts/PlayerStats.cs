@@ -8,7 +8,7 @@ public class PlayerStats : MonoBehaviour
     public int currentPowerup = -1; //-1 means no powerup
     public float viewShiftOnAccelerate = 15.0f;
 
-    private string[] powerups = { "Speedboost", "Low-Gravity" };
+    private string[] powerups = { "Speedboost", "Low-Gravity", "High-Acceleration", "Tankmode"};
 
     private ArcadeKart arcadeKartStats;
     private ExtendedControls extraControls;
@@ -37,10 +37,19 @@ public class PlayerStats : MonoBehaviour
                     StartCoroutine(UndoPowerup(1));
                     break;
                 case 2:
-                    arcadeKartStats.baseStats.AddedGravity -= 1.0f;
+                    arcadeKartStats.baseStats.AddedGravity -= 1.3f;
                     StartCoroutine(UndoPowerup(2));
                     break;
                 case 3:
+                    arcadeKartStats.baseStats.TopSpeed += 10.0f;
+                    StartCoroutine(UndoPowerup(3));
+                    break;
+                case 4:
+                    arcadeKartStats.baseStats.TopSpeed += 5.0f;
+                    arcadeKartStats.baseStats.Acceleration += 5.0f;
+                    extraControls.SetCameraFOV(viewShiftOnAccelerate, currentPowerupTime);
+                    gameObject.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+                    StartCoroutine(UndoPowerup(4));
                     break;
                 default:
                     break;
@@ -72,7 +81,6 @@ public class PlayerStats : MonoBehaviour
         {
             updateUI.SetText("Powerup: " + powerups[currentPowerup - 1]);
         }
-            
 
         currentPowerupTime = _time;
     }
@@ -127,7 +135,15 @@ public class PlayerStats : MonoBehaviour
                 arcadeKartStats.baseStats.Acceleration -= 5.0f;
                 break;
             case 2:
-                arcadeKartStats.baseStats.AddedGravity += 1.0f;
+                arcadeKartStats.baseStats.AddedGravity += 1.3f;
+                break;
+            case 3:
+                arcadeKartStats.baseStats.TopSpeed -= 10.0f;
+                break;
+            case 4:
+                arcadeKartStats.baseStats.TopSpeed -= 5.0f;
+                arcadeKartStats.baseStats.Acceleration -= 5.0f;
+                gameObject.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
                 break;
             default:
                 break;

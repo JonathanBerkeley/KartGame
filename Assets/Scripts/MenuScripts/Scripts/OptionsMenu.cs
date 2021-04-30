@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class OptionsMenu : MonoBehaviour
 {
+    public static float FieldOfViewModifier = 0.5f;
+
     public Button[] mainTabs;
     public int defaultSelected = 0;
     public GameObject[] innerMenus;
@@ -57,8 +59,14 @@ public class OptionsMenu : MonoBehaviour
     {
         if (GlobalAudioReference.instance != null)
             GlobalAudioReference.instance.SetEffectsVolume(_volume);
-    }   
+    }
     
+    public void SetDesiredFOV(float _fov)
+    {
+        FieldOfViewModifier = _fov;
+    }
+
+
     private void EnableSelected()
     {
         for (int i = 0; i < innerMenus.Length; ++i)

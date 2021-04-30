@@ -161,6 +161,7 @@ public class MenuInit : MonoBehaviour
         settingsMenu.SetActive(false);
         playMenu.SetActive(false);
         mainMenu.SetActive(true);
+        GamePreferencesManager.instance.SavePrefs();
         cameraScript.SetRotateSpeed(previousCameraSpeed);
     }
 
@@ -193,6 +194,7 @@ public class MenuInit : MonoBehaviour
         MenuClickAudio();
         connectMenu.SetActive(false);
         playMenu.SetActive(true);
+        GamePreferencesManager.instance.SavePrefs();
     }
 
     //Audio on menu

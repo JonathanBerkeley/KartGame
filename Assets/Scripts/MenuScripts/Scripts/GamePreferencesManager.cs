@@ -6,13 +6,22 @@ using UnityEngine;
 //Made following Unity official tutorial https://www.youtube.com/watch?v=uD7y4T4PVk0
 public class GamePreferencesManager : MonoBehaviour
 {
+    public static GamePreferencesManager instance;
+
     const string MasterVolumeKey = "MasterVolume";
     const string EffectsVolumeKey = "EffectsVolume";
     const string FullscreenKey = "Fullscreen";
     const string ResolutionKey = "Resolution";
+    const string PlayerLevelKey = "Level";
+    const string PlayerFOVKey = "FOV";
 
     private void Start()
     {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this);
+
         LoadPrefs();
     }
 
@@ -38,6 +47,9 @@ public class GamePreferencesManager : MonoBehaviour
             PlayerPrefs.SetInt(ResolutionKey, VideoSettings.instance.GetResolution());
         }
 
+        PlayerPrefs.SetFloat(PlayerLevelKey, PlayerLevel.playerXp);
+        PlayerPrefs.SetFloat(PlayerFOVKey, OptionsMenu.FieldOfViewModifier);
+
         PlayerPrefs.Save();
     }
 
@@ -60,6 +72,9 @@ public class GamePreferencesManager : MonoBehaviour
             VideoSettings.instance.ChangeFullscreen(fsEnable);
             VideoSettings.instance.ChangeResolution(PlayerPrefs.GetInt(ResolutionKey, 0));
         }
+
+        PlayerLevel.playerXp = PlayerPrefs.GetFloat(PlayerLevelKey, 0.0f);
+        OptionsMenu.FieldOfViewModifier = PlayerPrefs.GetFloat(PlayerFOVKey, 0.5f);
     }
 
     //Delete all saved preferences

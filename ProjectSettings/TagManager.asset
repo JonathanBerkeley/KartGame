@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FPCam
   - TPCam
+  - Canvas
   layers:
   - Default
   - TransparentFX
