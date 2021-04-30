@@ -8,23 +8,28 @@ using UnityEngine.SceneManagement;
 public class Timer : MonoBehaviour
 {
     public Text timerText;
+    public Text previousBest;
     private float startTime;
-    private float finishTime;
-    public static float current;
+    // private float finishTime;
+    // public static float current;
     public static bool startRace = false;
     private static bool win = false;
     private static float t = 0;
     
 
-    private bool noStart;
-
     void Start()
     {
         // Scene currentScene = SceneManager.GetActiveScene();
         // current = currentScene.buildIndex;
+        float pb = GetBestTime();
+        if (pb != float.MaxValue)
+        {
+            string minutes = ((int)pb / 60).ToString();
+            string seconds = (pb % 60).ToString("f2");
+            previousBest.text = minutes + ":" + seconds;
+        }
 
         t = 0;
-        // noStart = true;
         win = false;
         startTime = Time.time;
         startRace = true;
@@ -33,17 +38,10 @@ public class Timer : MonoBehaviour
     void Update()
     {
         //if the game is won return.
-        
         if (win) {
             return;
         }
-        //if start race is true and noStart is true set the start time and go out of the if statement by toggleing noStart to false. 
-        //this is to make sure the race timer doesnt start before the race begins.
-        // if(startRace && noStart)
-        // {
-        //     startTime = Time.time;
-        //     noStart = false;
-        // }
+
         // starts the timer if startRace is true.
         if(startRace)
         {   
@@ -58,82 +56,28 @@ public class Timer : MonoBehaviour
     // used to give the player points after they win and to toggle the win variable which will then show the game is complete screen.
     public static void Win()
     {
-        //t is the time that the player finished.
+        //t is the time that the player finished.ssssssssssssssaw
 
-        // // Debug.Log(current);
-        // //if its level 1 give the player a different point multiplier for different time finshed.
         // if(current == 1)
+        // if(t < 60)
         // {
-        //     if(t > 60)
-        //     {
-        //         Player.score *= 1.1;
-        //     }
-        //     else if(t <= 60 && t > 50)
-        //     {
-        //         Player.score *= 1.2;
-        //     }
-        //     else if(t <= 50 && t > 40)
-        //     {
-        //         Player.score *= 1.3;
-        //     }
-        //     else if(t <= 40 && t > 30)
-        //     {
-        //         Player.score *= 1.4;
-        //     }
-        //     else if(t <= 30 && t > 20)
-        //     {
-        //         Player.score *= 1.5;
-        //     }
-        //     else if(t <= 20 && t > 17)
-        //     {
-        //         Player.score *= 2;
-        //     }        
-        //     else if(t <= 17 && t > 15)
-        //     {
-        //         Player.score *= 3;
-        //     }
-        //     else if(t <= 15 && t > 0)
-        //     {
-        //         Player.score *= 4;
-        //     }
+        //     score += 100;
         // }
-        // //if its level 2 give the player a different point multiplier for different time finshed.
-        // if(current == 2)
-        // {
-        //     if(t > 60)
-        //     {
-        //         Player.score *= 1.1;
-        //     }
-        //     else if(t <= 60 && t > 50)
-        //     {
-        //         Player.score *= 1.2;
-        //     }
-        //     else if(t <= 50 && t > 40)
-        //     {
-        //         Player.score *= 1.3;
-        //     }
-        //     else if(t <= 40 && t > 30)
-        //     {
-        //         Player.score *= 1.4;
-        //     }
-        //     else if(t <= 30 && t > 20)
-        //     {
-        //         Player.score *= 1.5;
-        //     }
-        //     else if(t <= 20 && t > 17)
-        //     {
-        //         Player.score *= 1.7;
-        //     }        
-        //     else if(t <= 17 && t > 15)
-        //     {
-        //         Player.score *= 2;
-        //     }
-        //     else if(t <= 15 && t > 0)
-        //     {
-        //         Player.score *= 3;
-        //     }
         // }
-        // toggles the game is complete to make the player win the level.
+        // toggles the game is complete to make the timer stop.
+
+        float prevBest = PlayerPrefs.GetFloat("BestTime", float.MaxValue);
+        if (t < prevBest)
+        {
+            PlayerPrefs.SetFloat("BestTime", t);
+            PlayerPrefs.Save();
+        }
+
         win = true;
+    }
+
+    public static float GetBestTime()
+    {
+        return PlayerPrefs.GetFloat("BestTime", float.MaxValue);
     }
 }

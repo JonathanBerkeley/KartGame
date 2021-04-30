@@ -50,18 +50,21 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenuUI.SetActive(false);
         GameIsPaused = false;
+        Cursor.visible = false;
     }
 
 // while the game is paused it displays the pause menu
     void Pause()
     {    
         pauseMenuUI.SetActive(true);
+        Cursor.visible = true;
         GameIsPaused = true;
     }
     //shows the game complete menu
     public void GameCompletePause()
-    {
+    {   
         gameCompleteMenuUI.SetActive(true);
+        Cursor.visible = true;
         GameIsComplete = true;
     }
     //finds the current scene and loads it.
@@ -70,6 +73,7 @@ public class PauseMenu : MonoBehaviour
         Scene current = SceneManager.GetActiveScene();
         SceneManager.LoadScene(current.name);        
     }
+    //loads menu
     public void LoadMenu()
     {
         SceneManager.LoadScene("MainMenu");
